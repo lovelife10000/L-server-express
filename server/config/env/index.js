@@ -77,7 +77,7 @@ var all = {
   ],
   //开启第三方登录
   snsLogins:['github','qq'],
-  Partner:[
+  Partners:[
     {
       name:'起点学院',
       url:'https://www.qidianla.com/',

@@ -26,7 +26,8 @@ if(config.seedDB) { require('./config/seed'); }
 var app = express();
 
 require('./config/express')(app);
-require('./routes')(app);
+ require('./routes')(app);
+
 
 if ('development' === config.env) {
   app.use(errorHandler());
