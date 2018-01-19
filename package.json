@@ -1,7 +1,7 @@
 {
-  "name": "jackblog-api-express",
-  "version": "1.3.3",
-  "description": "Jackblog API Express版",
+  "name": "L-server-express",
+  "version": "1.0.0",
+  "description": "L-server-express",
   "main": "server/app.js",
   "scripts": {
     "test": "gulp test",
@@ -10,17 +10,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jackhutu/jackblog-api-express.git"
+    "url": "git+https://github.com/lovelife10000/L-server-express.git"
   },
   "keywords": [
-    "jackblog"
+    "L-server-express"
   ],
-  "author": "Jack Hu",
+  "author": "lovelife10000",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jackhutu/jackblog-api-express/issues"
+    "url": "https://github.com/lovelife10000/L-server-express/issues"
   },
-  "homepage": "https://github.com/jackhutu/jackblog-api-express#readme",
+  "homepage": "https://github.com/lovelife10000/L-server-express#readme",
   "dependencies": {
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",

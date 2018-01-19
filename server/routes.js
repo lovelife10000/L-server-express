@@ -5,7 +5,7 @@ var path = require('path');
 module.exports = function(app) {
 console.log('Z这里');
   // app.use('/admin', require('./api/admin'));
-  app.use('/', require('./api/web/route'));
+  app.use('/', require('./api/admin/route'));
   // app.use('/users', require('./api/user'));
   //
   // app.use('/auth', require('./auth'));

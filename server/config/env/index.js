@@ -8,7 +8,7 @@ var all = {
   env: process.env.NODE_ENV,
   root: path.normalize(__dirname + '/../../..'),
   // port: process.env.PORT || 9000,
-   port:  9000,
+   port:  9001,
   //mongodb配置
   mongo: {
     options: {
@@ -117,6 +117,32 @@ var all = {
       name:'运营派',
       url:'https://www.yunyingpai.com/',
       img:'http://viralnova.wang/resources/views/index/woshipm/assets/images/yy.jpg'
+    },
+  ],
+  ParentUserGroups:[
+    {
+      group_id:1,
+      name:'超级管理员',
+      description:'这是超级管理员',
+      power:[],
+      parent:'',
+      status:true
+    },
+    {
+      group_id:2,
+      name:'网站管理员',
+      description:'这是网站管理员',
+      power:[],
+      parent:1,
+      status:true
+    },
+    {
+      group_id:3,
+      name:'投稿员',
+      description:'这是投稿员',
+      power:[],
+      parent:2,
+      status:true
     },
   ]
 };
