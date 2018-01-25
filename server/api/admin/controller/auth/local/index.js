@@ -40,12 +40,15 @@ module.exports = {
           });
         } else {
           req.session.logined = true;
-          req.session.loginedUserInfo = info;
 
+          req.session.loginedUserInfo = info;
+          console.log('密码不正确2',req.session);
 
           //把session保存到redis中
-          redisUtil.set(appConfig.sessionSecret + '_siteTemplate', 1, 1000 * 60 * 60 * 24);
-
+          redisUtil.set(appConfig.session.secrets,req.session, 1000 * 60 * 60 * 24);
+          console.log('密码不正确3',redisUtil.get(appConfig.session.secrets,function (data) {
+            console.log('密码不正确4',data);
+          }));
           //生成token
           let token = authUtil.signToken(info._id);
 

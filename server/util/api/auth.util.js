@@ -2,49 +2,74 @@
 
 var mongoose = require('mongoose');
 var passport = require('passport');
-var config = require('../../config/app.config');
+var appConfig = require('../../config/app.config');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
-var User = mongoose.model('User');
+var UserModel = mongoose.model('User');
 
-/** 
+/**
  * 验证token
  */
 function authToken(credentialsRequired) {
   return compose()
-        .use(function(req, res, next) {
-          if(req.query && req.query.access_token) {
-            req.headers.authorization = 'Bearer ' + req.query.access_token;
-          }
-          next();
-        })
-        .use(expressJwt({ 
-          secret: config.session.secrets,
-          credentialsRequired:credentialsRequired //是否抛出错误
-         }))
+    .use(function (req, res, next) {
+      console.log('req.query是', req.query);
+      if (req.query && req.query.access_token) {
+        req.headers.authorization = 'Bearer ' + req.query.access_token;
+      }
+      next();
+    })
+    .use(expressJwt({
+      secret: appConfig.session.secrets,
+      credentialsRequired: credentialsRequired //是否抛出错误
+    }))
 }
 /**
  * 验证用户是否登录
  */
-function isAuthenticated() {
+function isAuthenticated2() {
+  console.log('开始认证');
   return compose()
     .use(authToken(true))
-    .use(function (err,req,res,next) {
+    .use(function (err, req, res, next) {
       //expressJwt 错误处理中间件
       if (err.name === 'UnauthorizedError') {
         return res.status(401).send();
       }
       next();
     })
-    .use(function(req, res, next) {
-      User.findById(req.user._id, function (err, user) {
+    .use(function (req, res, next) {
+      UserModel.findById(req.user._id, function (err, user) {
         if (err) return res.status(500).send();
         if (!user) return res.status(401).send();
         req.user = user;
         next();
       });
     });
+}
+function isAuthenticated() {
+  return function (req, res, next) {
+    console.log('开始认证', req.headers.authorization);
+    try {
+      var decoded = jwt.verify(req.headers.authorization, 'L-server-express-secret');
+    } catch (err) {
+      return res.status(401).send({error: '非法请求'});
+    }
+    if (decoded) {
+      console.log('req.session是',req.session)
+      //if(decoded._id===req.session.loginedUserInfo._id){
+        req.session.logined = true;
+      //}
+    }else {
+      return res.status(401).send({error: '非法请求'});
+    }
+
+    next();
+
+  }
+
+
 }
 
 /**
@@ -56,7 +81,7 @@ function hasRole(roleRequired) {
   return compose()
     .use(isAuthenticated())
     .use(function meetsRequirements(req, res, next) {
-      if (config.userRoles.indexOf(req.user.role) >= config.userRoles.indexOf(roleRequired)) {
+      if (appConfig.userRoles.indexOf(req.user.role) >= appConfig.userRoles.indexOf(roleRequired)) {
         next();
       }
       else {
@@ -69,7 +94,7 @@ function hasRole(roleRequired) {
  * 生成token
  */
 function signToken(id) {
-  return jwt.sign({ _id: id }, config.session.secrets, { expiresIn: '1y' });
+  return jwt.sign({_id: id}, appConfig.session.secrets, {expiresIn: '1y'});
 }
 
 /**
@@ -78,11 +103,11 @@ function signToken(id) {
 function snsPassport() {
   return compose()
     .use(authToken(false))
-    .use(function( req, res, next) {
+    .use(function (req, res, next) {
       req.session.passport = {
         redirectUrl: req.query.redirectUrl || '/'
       }
-      if(req.user){
+      if (req.user) {
         req.session.passport.userId = req.user._id;
       }
       next();

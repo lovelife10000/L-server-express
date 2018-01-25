@@ -7,12 +7,14 @@ const UserModel = mongoose.model('User');
 
 module.exports = {
   getUserInfo: function (req, res, next) {
-    UserGroupModel.findOne({
-      group_id: 1,
+    console.log('req.session是2',req.session)
+    UserModel.findOne({
+      _id: req.session.loginedUserInfo._id,
     }).then(function (info) {
-      if (info.ok === 1) {
+      if (info) {
         res.status(200).json({
           code: 1,
+          data:info,
           msg: '登录成功'
         })
       }else {

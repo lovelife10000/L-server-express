@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs');
 
 let all = {
-  sessionSecret: 'lijun1991',
   env: process.env.NODE_ENV,
   root: path.normalize(__dirname + '/../../..'),
   // port: process.env.PORT || 9000,
@@ -17,6 +16,11 @@ let all = {
   },
   //redis 配置
   redis: {
+    host:  '127.0.0.1',
+    port:  6379,
+    password:  ''
+  },
+  redis2: {
     host: process.env.REDIS_PORT_6379_TCP_ADDR || '127.0.0.1',
     port: process.env.REDIS_PORT_6379_TCP_PORT || 6379,
     password: process.env.REDIS_PASSWORD || ''
@@ -24,7 +28,7 @@ let all = {
   //是否初始化数据
   seedDB: false,
   session: {
-    secrets: 'jackblog-secret',
+    secrets: 'L-server-express-secret',
   },
   //用户角色种类
   userRoles: ['user', 'admin'],

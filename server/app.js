@@ -5,6 +5,9 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var express = require('express');
 var mongoose = require('mongoose');
 var appConfig = require('./config/app.config');
+var session = require('express-session');
+var redisStore = require('connect-redis')(session);
+
 var path = require('path');
 var fs = require('fs');
 var errorHandler = require('errorhandler');
@@ -32,6 +35,25 @@ if (appConfig.seedDB) {
 }
 
 var app = express();
+
+/*
+ * 设置session
+ * */
+app.use(session({
+  secret: appConfig.session.secrets,
+  store: new redisStore({//session 的存储方式，默认存放在内存中，也可以使用 redis，mongodb 等。express 生态中都有相应模块的支持。
+    port: appConfig.redis.port,
+    host: appConfig.redis.host,
+    pass: appConfig.redis.password,
+    ttl: 1800 // 过期时间
+  }),
+  saveUninitialized: true,
+  resave: true,
+  //saveUninitialized: true,
+  cookie: {maxAge: 30 * 60 * 1000}
+}));
+
+
 
 require('./config/express.config')(app);
 require('./routes')(app);

@@ -7,6 +7,7 @@ const UserGroupModel = mongoose.model('UserGroup');
 
 module.exports = {
   getParentUserGroups: function (req, res, next) {
+    console.log('getParentUserGroups中',req.session)
     UserGroupModel.findOne({
       group_id: 1,
     }).then(function (info) {
