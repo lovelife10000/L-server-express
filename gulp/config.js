@@ -5,7 +5,7 @@ var gutil = require('gulp-util');
 exports.paths = {
   mocha: 'test',
   istanbul: 'test_coverage',
-  server:'server'
+  server:'app'
 };
 /**
  *  错误处理

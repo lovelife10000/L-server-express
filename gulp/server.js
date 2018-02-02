@@ -9,7 +9,7 @@ var nodemon = require('gulp-nodemon');
 //默认development模式
 gulp.task('nodemon',function () {
   nodemon({
-    script: path.join(config.paths.server,'/app.js'), 
+    script: path.join(config.paths.server,'/server/server.js'),
     ext: 'js',
     watch: [
       path.join(config.paths.server,'/')
