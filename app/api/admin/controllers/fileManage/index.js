@@ -1,57 +1,41 @@
-const formidable = require('formidable')
+const mongoose = require('mongoose')
+const UserModel=mongoose.model('User');
 const moment = require('moment')
-const fs=require('fs');
-const path=require('path');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
   uploadAvatar: function (req, res, next) {
 
 
     var base64Data = req.body.avatar.replace(/^data:image\/.*;base64,/, "");//remove head
-    console.log(req.body.avatar.match((/^data:[A-Za-z]+\/[A-Za-z]+;base64/)));
-    const base64Head=req.body.avatar.match((/^data:[A-Za-z]+\/[A-Za-z]+;base64/))[0];
-    var ext = base64Head.match(/(png|gif|jpeg|jpg)/);
-    if(ext !=='png' || ext!=='jpeg'||ext!=='gif'||ext!=='jpg'){
-      res.status(401).send()
+    const base64Head = req.body.avatar.match((/^data:[A-Za-z]+\/[A-Za-z]+;base64/))[0];
+    var ext = base64Head.match(/(png|gif|jpeg|jpg)/)[0];
+    console.log(ext !== 'png')
+    if (!['png','jpeg','jpg','gif'].includes(ext)) {
+      return res.status(401).send()
     }
-    var target_path = path.join(__dirname,'../../../../../resources/images')+'666.' + ext;
-    fs.writeFile(target_path, base64Data, 'base64', function(err) {
+    const date = new Date();
+    const ms = moment(date).format('YYYYMMDDHHmmss').toString();
+    var target_path = path.join(__dirname, '../../../../../resources/images/') + ms + '.' + ext;
+    var relativeTarget_path = '/images/' + ms + '.' + ext;
+    console.log(target_path)
+
+    fs.writeFile(target_path, base64Data, 'base64', function (err) {
       if (!err) {
-        res.json({'msg':'success'});
+        console.log('here',req.user)
+        UserModel.update({
+          _id: req.user._id,
+        }, {
+          avatar: relativeTarget_path,
+        }).then(function (info) {
+          return res.status(200).json({'success': true,'url':relativeTarget_path});
+        });
+
+
       }
     });
 
 
-    //   let newFileName = "";//修改后的文件名
-    //
-    //   const form = new formidable.IncomingForm();
-    //   form.uploadDir = '../../../../../resources';//设置保存的位置
-    //
-    //   form.on('file', function (field, file) {//上传文件
-    //
-    //     const thisType = data.type;
-    //     const date = new Date();
-    //     const ms = moment(date).format('YYYYMMDDHHmmss').toString();
-    //     let typeKey = 'img';
-    //     newFileName = typeKey + ms + "." + thisType;
-    //
-    //     fs.rename(file.path, updatePath + newFileName, function (error) {
-    //
-    //     });
-    //
-    //
-    //   });
-    //
-    //   form.on('error', function (err) {
-    //     console.log('出现错误');
-    //   });
-    //
-    //   form.on('end', function () {//解析完毕
-    //     res.end('/upload/images/' + newFileName);
-    //   });
-    //
-    //   form.parse(req, function (error, fields, files) {//解析request对象
-    //
-    //   });
   }
 }

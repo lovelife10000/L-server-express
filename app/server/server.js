@@ -24,6 +24,9 @@ fs.readdirSync(modelsPath).forEach(function (file) {
     require(modelsPath + '/' + file);
   }
 });
+
+
+
 //mongoose promise 风格
 mongoose.Promise = global.Promise;
 
@@ -33,7 +36,7 @@ if (appConfig.seedDB) {
 }
 
 var app = express();
-
+app.use(express.static(path.join(__dirname, '..', '../resources')))
 
 
 

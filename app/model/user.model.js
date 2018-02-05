@@ -85,6 +85,7 @@ UserSchema
       'nickname': this.nickname,
       'register_time': this.register_time,
       'email': this.email,
+      'avatar':'http://localhost:9001'+this.avatar
     };
   });
 
