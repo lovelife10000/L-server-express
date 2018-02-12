@@ -43,6 +43,7 @@ router.get('/docManage/getCategories',authMiddleware.isAuthenticated(),docManage
 router.post('/docManage/addCategory',authMiddleware.isAuthenticated(),docManageController.addCategory);
 router.get('/docManage/getTags',authMiddleware.isAuthenticated(),docManageController.getTags);
 router.post('/docManage/addTag',authMiddleware.isAuthenticated(),docManageController.addTag);
+router.post('/docManage/addDoc',authMiddleware.isAuthenticated(),docManageController.addDoc);
 
 /*
 * 文件管理

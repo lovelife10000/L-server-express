@@ -13,11 +13,11 @@ var DocSchema = new Schema({
 		unique: true
 	},
 	content:String,
-	images:{
+	image:{
 		type:String,
 	},
 	tags:[{
-	  type: Schema.Types.ObjectId,
+	  type: String,
 	  ref: 'Tag'
 	}],
 	visit_num:{			//访问数
@@ -41,16 +41,8 @@ var DocSchema = new Schema({
     default:'article'
   },
 	status:{				//0:草稿 1:发布
-		type:Number,
+		type:String,
 		default:0
-	},
-	created_time: {
-		type: Date,
-		default: Date.now
-	},
-	publish_time: {
-		type: Date,
-		default: Date.now
 	},
   from: {
     type: String,
@@ -72,9 +64,17 @@ var DocSchema = new Schema({
     type: String,
     default:''
   },
+  created_time: {
+    type: String,
+
+  },
+  publish_time: {
+    type: String,
+
+  },
   updated_time: {
-    type: Date,
-    default: Date.now
+    type: String,
+
   }
 });
 

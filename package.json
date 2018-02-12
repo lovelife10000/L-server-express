@@ -41,7 +41,7 @@
     "lodash": "^4.16.2",
     "markdown-it": "^8.0.0",
     "method-override": "^2.3.6",
-    "moment": "^2.15.1",
+    "moment": "^2.20.1",
     "mongoose": "^4.6.2",
     "multer": "^1.2.0",
     "passport": "^0.3.2",
