@@ -1,7 +1,3 @@
-/**
- * 标签表
- */
-
 'use strict';
 
 var mongoose = require('mongoose');
@@ -12,22 +8,10 @@ var TagSchema = new Schema({
 		type:String,
 		unique: true
 	},	
-	cid:{
-		type:Schema.Types.ObjectId,
-		ref:'TagCategory'
+	slug:{
+		type:String,
+    unique: true
 	},
-	is_index:{
-		type:Boolean,
-		default:false
-	},
-	is_show: {
-		type:Boolean,
-		default:false
-	},
-	sort:{
-		type:Number,
-		default:1
-	}
 });
 
 var Tag = mongoose.model('Tag',TagSchema);

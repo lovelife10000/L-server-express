@@ -1,6 +1,3 @@
-/** 
- * 文章表
- */
 'use strict';
 
 var mongoose = require('mongoose');
@@ -18,7 +15,7 @@ var ArticleSchema = new Schema({
 	content:String,
 	//存储文章所用到的图片
 	images:{
-		type:Array
+		type:String,
 	},
 	//一篇文章可以有多个标签
 	tags:[{
@@ -29,10 +26,6 @@ var ArticleSchema = new Schema({
 		type:Number,
 		default:1
 	},
-	comment_count:{		//评论数
-		type:Number,
-		default:0
-	},
 	like_count:{
 		type:Number,
 		default:1
@@ -41,6 +34,14 @@ var ArticleSchema = new Schema({
 		type:Boolean,
 		default:false
 	},
+  hot:{
+    type:Boolean,
+    default:false
+  },
+  type:{
+    type:String,
+    default:'article'
+  },
 	status:{				//0:草稿 1:发布
 		type:Number,
 		default:0
@@ -53,6 +54,18 @@ var ArticleSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+  from: {
+    type: String,
+    default:''
+  },
+  keywords: {
+    type: String,
+    default: ''
+  },
+  description: {
+    type: String,
+    default:''
+  },
   updated: {
     type: Date,
     default: Date.now
