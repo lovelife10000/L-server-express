@@ -31,7 +31,7 @@ gulp.task('nodemon:test',function () {
 //production模式
 gulp.task('nodemon:production',function () {
   nodemon({
-    script: path.join(config.paths.server,'/app.js'), 
+    script: path.join(config.paths.server,'/server/server.js'),
     ext: 'js json',
     watch: [
       path.join(config.paths.server,'/')
