@@ -14,6 +14,7 @@ const loggerUtil=require('../../../../../util/logs');
 module.exports = {
   localLogin2: function (req, res, next) {
     console.log('控制器执行了')
+      console.log('session is 2',req.session)
     let errorMsg;
     if (!req.body.captcha) {
       errorMsg = "验证码不能为空.";
@@ -78,6 +79,7 @@ module.exports = {
         UserModel.findOne({
           username: username.toLowerCase()
         }, function(err, user) {
+
           console.log('控制器执行了11')
           if (err) return done(err);
           if (!user) {
@@ -106,9 +108,12 @@ module.exports = {
     //测试环境不用验证码
     if(process.env.NODE_ENV !== 'test'){
       console.log('控制器执行了3')
+        console.log(req.session.captcha+'666');
+        console.log(req.body.captcha.toUpperCase()+'777');
       let errorMsg;
       if(!req.body.captcha){
         errorMsg = "验证码不能为空.";
+
       }else if(req.session.captcha !== req.body.captcha.toUpperCase()){
         errorMsg = "验证码错误.";
       }else if(req.body.username === '' || req.body.password === ''){
@@ -142,6 +147,7 @@ module.exports = {
     var txt = ary[0];
     var buf = ary[1];
     req.session.captcha = txt;
+    console.log('session is ',req.session)
     return res.status(200).send(buf);
   },
 };

@@ -19,7 +19,7 @@ console.log('路由表执行了');
 /*
 * auth认证
 * */
-router.post('/auth/local',authLocalController.localLogin);
+router.post('/auth/local',authLocalController.localLogin2);
 router.get('/login/getCaptcha',authLocalController.getCaptcha);
 
 /*

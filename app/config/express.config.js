@@ -14,7 +14,7 @@ var appConfig = require('./app.config');
 module.exports = function(app) {
   app.enable('trust proxy');
   var options = {
-    origin: ['http://admin.lijun1991.com'],
+    origin: ['http://localhost:3001','http://localhost:3002'],
     credentials: true
   };
   app.use(cors(options));
