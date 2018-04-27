@@ -6,6 +6,6 @@ var banner = require('../controllers/banner');
 var router = express.Router();
 console.log('载入web路由');
 router.get('/banner',banner.banner);
-router.get('article',banner.article)
+router.get('/article',banner.article)
 
 module.exports = router;
