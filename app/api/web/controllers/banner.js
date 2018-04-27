@@ -11,5 +11,9 @@ module.exports = {
     },
     article:function (req,res,next) {
         return res.status(200).json({success: 1,data:json.article});
+    },
+    recommend:function (req,res,next) {
+        return res.status(200).json({success: 1,data:json.recommend});
     }
+
 }

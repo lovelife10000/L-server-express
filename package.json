@@ -5,7 +5,7 @@
   "main": "server/app.js",
   "scripts": {
     "test": "gulp test",
-    "dev":"",
+    "dev": "",
     "start": "gulp serve",
     "pm2-start": "pm2 start --no-daemon process.json"
   },

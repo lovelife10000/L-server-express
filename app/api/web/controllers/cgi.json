@@ -196,5 +196,27 @@
       "category":"分类1"
 
     }
+  ],
+  "recommend":[
+    {
+      "title":"这是标题呢",
+      "img":"http://pic3.16pic.com/00/53/72/16pic_5372096_b.jpg",
+      "url":"http://qq.com"
+    },
+    {
+      "title":"这是标题呢",
+      "img":"http://pic3.16pic.com/00/53/72/16pic_5372096_b.jpg",
+      "url":"http://qq.com"
+    },
+    {
+      "title":"这是标题呢",
+      "img":"http://pic3.16pic.com/00/53/72/16pic_5372096_b.jpg",
+      "url":"http://qq.com"
+    },
+    {
+      "title":"这是标题呢",
+      "img":"http://pic3.16pic.com/00/53/72/16pic_5372096_b.jpg",
+      "url":"http://qq.com"
+    }
   ]
 }
