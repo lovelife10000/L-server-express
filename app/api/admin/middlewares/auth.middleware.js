@@ -12,44 +12,51 @@ var UserModel = mongoose.model('User');
  * 验证token
  */
 function authToken(credentialsRequired) {
-  return compose()
-    .use(function (req, res, next) {
-      console.log('req.user是', req.user,req.session);
-      if (req.query && req.query.access_token) {
-        req.headers.authorization = 'Bearer ' + req.query.access_token;
-      }
-      next();
-    })
-    .use(expressJwt({
-      secret: appConfig.session.secrets,
-      credentialsRequired: credentialsRequired //是否抛出错误
-    }))
+    return compose()
+        .use(function (req, res, next) {
+
+            console.log('开始认证');
+            console.log('req.user是', req.user, req.session);
+            if (req.query && req.query.access_token) {
+                req.headers.authorization = 'Bearer ' + req.query.access_token;
+            }
+            next();
+        })
+        .use(expressJwt({
+            secret: appConfig.session.secrets,
+            credentialsRequired: credentialsRequired //是否抛出错误
+        }))
 }
+
 /**
  * 验证用户是否登录
  */
 function isAuthenticated() {
-  console.log('开始认证');
-  return compose()
-    .use(authToken(true))
-    .use(function (err, req, res, next) {
-      console.log('UnauthorizedError');
-      //expressJwt 错误处理中间件
-      if (err.name === 'UnauthorizedError') {
-        return res.status(401).send();
-      }
-      next();
-    })
-    .use(function (req, res, next) {
-      console.log('最后一步');
-      UserModel.findById(req.user._id, function (err, user) {
-        if (err) return res.status(500).send();
-        if (!user) return res.status(401).send();
-        req.user = user;
-        next();
-      });
-    });
+
+
+    return compose()
+        .use(authToken(true))
+        .use(function (err, req, res, next) {
+
+            console.log('UnauthorizedError');
+
+            //expressJwt 错误处理中间件
+            if (err.name === 'UnauthorizedError') {
+                return res.status(200).send({msg:"未登录"});
+            }
+            next();
+        })
+        .use(function (req, res, next) {
+            console.log('最后一步');
+            UserModel.findById(req.user._id, function (err, user) {
+                if (err) return res.status(500).send();
+                if (!user) return res.status(401).send();
+                req.user = user;
+                next();
+            });
+        });
 }
+
 // function isAuthenticated3() {
 //   return function (req, res, next) {
 //     console.log('开始认证', req.headers.authorization);
@@ -79,42 +86,42 @@ function isAuthenticated() {
  * 验证用户权限
  */
 function hasRole(roleRequired) {
-  if (!roleRequired) throw new Error('Required role needs to be set');
+    if (!roleRequired) throw new Error('Required role needs to be set');
 
-  return compose()
-    .use(isAuthenticated())
-    .use(function meetsRequirements(req, res, next) {
-      if (appConfig.userRoles.indexOf(req.user.role) >= appConfig.userRoles.indexOf(roleRequired)) {
-        next();
-      }
-      else {
-        return res.status(403).send();
-      }
-    });
+    return compose()
+        .use(isAuthenticated())
+        .use(function meetsRequirements(req, res, next) {
+            if (appConfig.userRoles.indexOf(req.user.role) >= appConfig.userRoles.indexOf(roleRequired)) {
+                next();
+            }
+            else {
+                return res.status(403).send();
+            }
+        });
 }
 
 /**
  * 生成token
  */
 function signToken(id) {
-  return jwt.sign({_id: id}, appConfig.session.secrets, {expiresIn: '0.5h'});
+    return jwt.sign({_id: id}, appConfig.session.secrets, {expiresIn: '0.5h'});
 }
 
 /**
  * sns登录传递参数
  */
 function snsPassport() {
-  return compose()
-    .use(authToken(false))
-    .use(function (req, res, next) {
-      req.session.passport = {
-        redirectUrl: req.query.redirectUrl || '/'
-      }
-      if (req.user) {
-        req.session.passport.userId = req.user._id;
-      }
-      next();
-    });
+    return compose()
+        .use(authToken(false))
+        .use(function (req, res, next) {
+            req.session.passport = {
+                redirectUrl: req.query.redirectUrl || '/'
+            }
+            if (req.user) {
+                req.session.passport.userId = req.user._id;
+            }
+            next();
+        });
 }
 
 exports.isAuthenticated = isAuthenticated;
