@@ -14,6 +14,18 @@ module.exports = {
     },
     recommend:function (req,res,next) {
         return res.status(200).json({success: 1,data:json.recommend});
+    },
+    cateBanner:function (req,res,next) {
+
+        return res.status(200).json({success: 1,data:json.cateBanner});
+    },
+    cateArticle:function (req,res,next) {
+
+        return res.status(200).json({success: 1,data:json.cateArticle});
+    },
+    detail:function (req,res,next) {
+
+        return res.status(200).json({success: 1,data:json.detail});
     }
 
 }
