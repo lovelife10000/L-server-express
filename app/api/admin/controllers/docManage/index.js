@@ -21,17 +21,17 @@ module.exports={
   addCategory:function (req,res) {
     let name=req.body.name;
     let slug=req.body.slug;
-    let parentCategoryId=req.body.parentCategoryId;
-    let sort=req.body.sort;
+    let parentId=req.body.parentId;
+    let order=req.body.order;
 
     CategoryModel.createAsync({
       name:name,
       slug:slug,
-      parent_category_id:parentCategoryId,
-      sort:sort
+        parentId:parentId,
+        order:order
     }).then(function (result) {
       if (result) {
-        return res.status(200).json({success: true});
+        return res.status(200).json({success: true,msg:'添加成功'});
       }
     }).catch(function () {
       return res.status(401).json();

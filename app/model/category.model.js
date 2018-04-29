@@ -1,8 +1,8 @@
 const mongoose =require('mongoose');
 const CategorySchema=new mongoose.Schema({
   name:String,
-  parent_category_id:String,
-  sort:Number,
+  parentId:String,
+    order:Number,
   slug:String
 });
 const Category=mongoose.model('Category',CategorySchema);
