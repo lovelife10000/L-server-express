@@ -42,6 +42,7 @@ router.post('/userManage/addUser',authMiddleware.isAuthenticated(),userManageCon
 router.get('/docManage/getCategories',authMiddleware.isAuthenticated(),docManageController.getCategories);
 router.post('/docManage/addCategory',authMiddleware.isAuthenticated(),docManageController.addCategory);
 router.post('/docManage/editCategory',authMiddleware.isAuthenticated(),docManageController.editCategory);
+router.post('/docManage/removeCategory',authMiddleware.isAuthenticated(),docManageController.removeCategory);
 router.get('/docManage/getTags',authMiddleware.isAuthenticated(),docManageController.getTags);
 router.post('/docManage/addTag',authMiddleware.isAuthenticated(),docManageController.addTag);
 router.post('/docManage/addDoc',authMiddleware.isAuthenticated(),docManageController.addDoc);

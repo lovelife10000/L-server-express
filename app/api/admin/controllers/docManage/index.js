@@ -68,6 +68,20 @@ module.exports = {
         });
     },
 
+    removeCategory: function (req, res) {
+        let id = req.body.id;
+
+        CategoryModel.removeAsync({
+            _id:id
+        }).then(function (result) {
+            if (result) {
+                return res.status(200).json({success: true, msg: '删除成功'});
+            }
+        }).catch(function () {
+            return res.status(401).json();
+        });
+    },
+
     getTags: function (req, res) {
         TagModel.find().then(function (result) {
             if (result) {
