@@ -46,6 +46,7 @@ router.post('/docManage/removeCategory',authMiddleware.isAuthenticated(),docMana
 router.get('/docManage/getTags',authMiddleware.isAuthenticated(),docManageController.getTags);
 router.post('/docManage/addTag',authMiddleware.isAuthenticated(),docManageController.addTag);
 router.post('/docManage/addDoc',authMiddleware.isAuthenticated(),docManageController.addDoc);
+router.get('/docManage/getDocs',authMiddleware.isAuthenticated(),docManageController.getDocs);
 
 /*
 * 文件管理

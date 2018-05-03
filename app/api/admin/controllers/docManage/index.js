@@ -14,7 +14,9 @@ module.exports = {
 
             if (result) {
 
-                const resultData = func.addKeyForArr(func.RelationList(func.mapArrToGetKeys(result,['id','name','slug','parentId','order','level']), 'id', 'parentId', '0'))
+                const result1=func.mapArrToGetKeys(result,['id','name','slug','parentId','order','level'])
+                const result2=func.RelationList(result1, 'id', 'parentId', '0');
+                const resultData = func.addKeyForArr(result2)
 
 
                 return res.status(200).json({success: true, data: resultData});
@@ -120,7 +122,7 @@ module.exports = {
     },
 
     addDoc: function (req, res) {
-        console.log('进入')
+
         let title = req.body.title;
         let category = req.body.category;
         let type = req.body.type;
@@ -129,8 +131,8 @@ module.exports = {
         let hot = req.body.hot;
         let tags = req.body.tags;
         let from = req.body.from;
-        let visitNum = req.body.visitNum;
-        let likeNum = req.body.likeNum;
+        let click = req.body.click;
+        let like = req.body.like;
         let keywords = req.body.keywords;
         let description = req.body.description;
         let abstract = req.body.abstract;
@@ -140,14 +142,14 @@ module.exports = {
 
         const date = new Date();
         const ms = moment(date).format('YYYY-MM-DD-HH:mm:ss').toString();
-        let createdTime = ms;
+        let createTime = ms;
 
         let publishTime = status === 'published' ? ms : '';
-        let updatedTime = publishTime ? publishTime : '';
+        let updateTime = publishTime ? publishTime : '';
         let authorId = req.user._id;
-
+debugger
         DocModel.createAsync({
-            author_id: authorId,
+            authorId,
             title,
             category,
             type,
@@ -156,18 +158,17 @@ module.exports = {
             hot,
             tags,
             from,
-            visit_num: visitNum,
-            like_num: likeNum,
+            click,
+            like,
             keywords,
             description,
             abstract,
             content,
-            created_time: createdTime,
-            publish_time: publishTime,
-            updated_time: updatedTime
+            createTime,
+            updateTime
         }).then(function (result) {
             if (result) {
-                console.log('err is')
+               debugger
 
                 var base64Data = image.replace(/^data:image\/.*;base64,/, "");//remove head
 
