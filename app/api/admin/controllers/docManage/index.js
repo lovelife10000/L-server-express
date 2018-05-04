@@ -14,8 +14,8 @@ module.exports = {
 
             if (result) {
 
-                const result1=func.mapArrToGetKeys(result,['id','name','slug','parentId','order','level'])
-                const result2=func.RelationList(result1, 'id', 'parentId', '0');
+                const result1 = func.mapArrToGetKeys(result, ['id', 'name', 'slug', 'parentId', 'order', 'level'])
+                const result2 = func.RelationList(result1, 'id', 'parentId', '0');
                 const resultData = func.addKeyForArr(result2)
 
 
@@ -23,8 +23,8 @@ module.exports = {
             }
         })
             .catch(function () {
-            return res.status(401).json()
-        });
+                return res.status(401).json()
+            });
     },
 
     addCategory: function (req, res) {
@@ -55,8 +55,8 @@ module.exports = {
         let id = req.body.id;
 
         CategoryModel.updateAsync({
-            _id:id
-        },{
+            _id: id
+        }, {
             name: name,
             slug: slug,
             parentId: parentId,
@@ -74,7 +74,7 @@ module.exports = {
         let id = req.body.id;
 
         CategoryModel.removeAsync({
-            _id:id
+            _id: id
         }).then(function (result) {
             if (result) {
                 return res.status(200).json({success: true, msg: '删除成功'});
@@ -147,7 +147,7 @@ module.exports = {
         let publishTime = status === 'published' ? ms : '';
         let updateTime = publishTime ? publishTime : '';
         let authorId = req.user._id;
-debugger
+
         DocModel.createAsync({
             authorId,
             title,
@@ -168,7 +168,7 @@ debugger
             updateTime
         }).then(function (result) {
             if (result) {
-               debugger
+                debugger
 
                 var base64Data = image.replace(/^data:image\/.*;base64,/, "");//remove head
 
@@ -210,6 +210,47 @@ debugger
             console.log(err)
             return res.status(401).json();
         });
+    },
+
+    searchDocs: function (req, res) {
+
+        let list = req.body.list;
+        let obj = {}
+        for (let i of list) {
+            if (req.body[i]) {
+                if (i === 'createTime') {
+
+                    obj[i] = {
+                        $gte: req.body[i][0],
+                        $lt: req.body[i][1]
+                    }
+                }else {
+                    obj[i] = req.body[i]
+                }
+
+            }
+        }
+        console.log(obj);
+
+
+
+        DocModel.find(obj,'title createTime updateTime type hot top like click')
+            .populate({ path: 'category', select: 'name -_id' })   //上述结果集合中的dep字段用departments表中的name字段填充
+            .populate({ path: 'authorId', select: ' username -_id' })
+
+            .then(function (result) {
+
+            if (result) {
+
+
+
+
+                return res.status(200).json({success: true, data: result});
+            }
+        })
+            .catch(function () {
+                return res.status(401).json()
+            });
     },
 
 }

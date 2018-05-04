@@ -47,7 +47,7 @@ router.get('/docManage/getTags',authMiddleware.isAuthenticated(),docManageContro
 router.post('/docManage/addTag',authMiddleware.isAuthenticated(),docManageController.addTag);
 router.post('/docManage/addDoc',authMiddleware.isAuthenticated(),docManageController.addDoc);
 router.get('/docManage/getDocs',authMiddleware.isAuthenticated(),docManageController.getDocs);
-
+router.post('/docManage/searchDocs',authMiddleware.isAuthenticated(),docManageController.searchDocs);
 /*
 * 文件管理
 * */
