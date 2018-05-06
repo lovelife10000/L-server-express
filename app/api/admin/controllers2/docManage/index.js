@@ -6,6 +6,7 @@ const DocModel = mongoose.model('Doc');
 const fs = require('fs');
 const path = require('path')
 const func = require('../../../../util/func');
+var validator = require('validator');
 
 
 module.exports = {
@@ -112,7 +113,12 @@ module.exports = {
 
 
     getDocs: function (req, res) {
-        DocModel.find().then(function (result) {
+        const current=req.body.current;
+        validator.isEmail(current)
+        DocModel.find({},'abstract click createTime hot like title top type updateTime -_id')
+            .populate({ path: 'category', select: 'name -_id' })   //上述结果集合中的dep字段用departments表中的name字段填充
+            .populate({ path: 'authorId', select: ' username -_id' })
+            .then(function (result) {
             if (result) {
                 return res.status(200).json({success: true, data: result});
             }

@@ -37,6 +37,7 @@
     "express": "^4.14.0",
     "express-jwt": "^5.0.0",
     "express-session": "^1.15.2",
+    "express-validator": "^5.1.2",
     "ioredis": "^2.4.0",
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.16.2",

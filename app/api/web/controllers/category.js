@@ -1,7 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 const CategoryModel = mongoose.model('Category');
-const func = require('../../../util/func');
+const func = require('../../../utils/func');
 module.exports = {
     getCategories: function (req, res) {
         CategoryModel.find().then(function (result) {

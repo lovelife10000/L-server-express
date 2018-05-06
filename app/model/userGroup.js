@@ -8,12 +8,12 @@ const UserGroupSchema = mongoose.Schema({
   power: String,
   user_group_status: Boolean
 });
-const UserGroupModel = mongoose.model('UserGroup', UserGroupSchema);
+const UserGroup = mongoose.model('UserGroup', UserGroupSchema);
 
 
-Promise.promisifyAll(UserGroupModel);
-Promise.promisifyAll(UserGroupModel.prototype);
-module.exports = UserGroupModel;
+Promise.promisifyAll(UserGroup);
+Promise.promisifyAll(UserGroup.prototype);
+module.exports = UserGroup;
 
 
 

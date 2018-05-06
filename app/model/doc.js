@@ -92,8 +92,8 @@ DocSchema
 
 var Doc = mongoose.model('Doc', DocSchema);
 
-var Promise = require('bluebird');
-Promise.promisifyAll(Doc);
-Promise.promisifyAll(Doc.prototype);
+// var Promise = require('bluebird');
+// Promise.promisifyAll(Doc);
+// Promise.promisifyAll(Doc.prototype);
 
 module.exports = Doc;
