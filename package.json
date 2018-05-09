@@ -5,9 +5,23 @@
   "main": "server/app.js",
   "scripts": {
     "test": "gulp test",
-    "dev": "node --inspect ./app/server/server.js",
+    "dev": "nodemon --inspect ./app/server/server.js",
     "start": "gulp serve",
     "pm2-start": "pm2 start --no-daemon process.json"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ],
+    "delay": "2500",
+    "watch": [
+      "app"
+    ],
+    "env": {
+      "NODE_ENV": "development",
+      "PORT": "3003"
+    }
   },
   "repository": {
     "type": "git",
@@ -62,6 +76,7 @@
     "gulp-nodemon": "^2.2.1",
     "gulp-sequence": "^0.4.6",
     "gulp-util": "^3.0.7",
+    "nodemon": "^1.17.4",
     "should": "^11.1.0",
     "sinon": "^1.17.6",
     "supertest": "^2.0.0"
