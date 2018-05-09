@@ -47,4 +47,17 @@ module.exports = {
         return RegExp(/^(10|20|30|40)$/).test(str);
     },
 
+    checkCategoryName(str) {
+        return RegExp(/^[\w\d\u4e00-\u9fa5]{1,32}$/).test(str);
+    },
+
+    checkCategorySlug(str) {
+        return RegExp(/^[a-zA-Z]\w{1,10}$/).test(str);
+    },
+    checkCategoryOrder(str) {
+        return RegExp(/^([1-9]\d{0,2}|1000)$/).test(str);
+    },
+    checkCategoryParentId(str) {
+        return (str && validator.isMongoId(str)) || str==='firstCateNone';
+    },
 }

@@ -4,7 +4,7 @@ const DocModel = mongoose.model('Doc');
 const CategoryModel = mongoose.model('Category');
 const validator = require('validator');
 const validatorUtil = require('../../../utils/validator')
-
+const {res200False, res200True,res200FalseField} = require('../../../utils/response')
 
 const moment = require('moment')
 
@@ -33,7 +33,7 @@ class docManage {
                 // const resultData = func.addKeyForArr(result2)
 
 
-                return res.status(200).json({success: true, data: result2});
+                return res.status(200).json({success: true, data: result2,msg:'获取成功'});
             }
         })
             .catch(function () {
@@ -41,24 +41,78 @@ class docManage {
             });
     }
 
-    addCategory(req, res) {
+    async addCategory(req, res) {
+
+
         let name = req.body.name;
         let slug = req.body.slug;
         let parentId = req.body.parentId;
         let order = req.body.order;
-
-        CategoryModel.createAsync({
-            name: name,
-            slug: slug,
-            parentId: parentId,
-            order: order
-        }).then(function (result) {
-            if (result) {
-                return res.status(200).json({success: true, msg: '添加成功'});
+        let msg = ''
+        try {
+            if (!validatorUtil.checkCategoryName(name)) {
+                msg = '分类名称错误！'
+                throw ('err')
             }
-        }).catch(function () {
-            return res.status(401).json();
-        });
+            if (!validatorUtil.checkCategorySlug(slug)) {
+                msg = '分类别名错误！'
+                throw ('err')
+            }
+            if (!validatorUtil.checkCategoryOrder(order)) {
+                msg = '排序值错误！'
+                throw ('err')
+            }
+            if (!validatorUtil.checkCategoryParentId(parentId)) {
+                msg = '父级id错误！'
+                throw ('err')
+            }
+            //存在性校验
+            try {
+                const categoryNameExist = await CategoryModel.find({name});
+
+                if (categoryNameExist.length>0) {
+
+                    msg = '分类名称已经存在！'
+                    return res200FalseField(res, msg,'name')
+
+
+                }
+                const categorySlugExist = await CategoryModel.find({slug});
+                if (categorySlugExist.length>0) {
+                    msg = '分类别名已经存在！'
+                    return res200FalseField(res, msg,'slug')
+                }
+            } catch (err) {
+                return res200False(res, '查询出错')
+            }
+
+
+            //通过校验
+            try {
+
+                const createCate = await CategoryModel.create({
+                    name: name,
+                    slug: slug,
+                    parentId: parentId,
+                    order: order
+                });
+
+                if (createCate) {
+                    return res200True(res, '添加成功')
+
+                } else {
+                    return res200False(res, '添加失败')
+
+                }
+            } catch (err) {
+                return res200False(res, '查询出错')
+            }
+
+        } catch (err) {
+            return res200False(res, msg)
+
+        }
+
     }
 
     editCategory(req, res) {
@@ -329,7 +383,7 @@ class docManage {
                     hot: true
                 })
                 if (updateHot.ok === 1) {
-                    return res.status(200).json({success: true, msg: '修改成功',_id})
+                    return res.status(200).json({success: true, msg: '修改成功', _id})
                 } else {
                     return res.status(401).json({success: false, msg: '修改失败'})
                 }
@@ -363,7 +417,7 @@ class docManage {
                     hot: false
                 })
                 if (updateHot.ok === 1) {
-                    return res.status(200).json({success: true, msg: '修改成功',_id})
+                    return res.status(200).json({success: true, msg: '修改成功', _id})
                 } else {
                     return res.status(401).json({success: false, msg: '修改失败'})
                 }
@@ -397,7 +451,7 @@ class docManage {
                     top: true
                 })
                 if (updateHot.ok === 1) {
-                    return res.status(200).json({success: true, msg: '修改成功',_id})
+                    return res.status(200).json({success: true, msg: '修改成功', _id})
                 } else {
                     return res.status(401).json({success: false, msg: '修改失败'})
                 }
@@ -431,7 +485,7 @@ class docManage {
                     top: false
                 })
                 if (updateHot.ok === 1) {
-                    return res.status(200).json({success: true, msg: '修改成功',_id})
+                    return res.status(200).json({success: true, msg: '修改成功', _id})
                 } else {
                     return res.status(401).json({success: false, msg: '修改失败'})
                 }

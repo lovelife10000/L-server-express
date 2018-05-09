@@ -2,12 +2,14 @@ const mongoose = require('mongoose');
 const CategorySchema = new mongoose.Schema({
     name: {
         type: String,
+        index: true,
         unique: true
     },
     parentId: String,
     order: Number,
     slug: {
         type: String,
+        index: true,
         unique: true
     },
     level: Number,

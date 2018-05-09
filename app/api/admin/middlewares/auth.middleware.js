@@ -42,7 +42,7 @@ function isAuthenticated() {
 
             //expressJwt 错误处理中间件
             if (err.name === 'UnauthorizedError') {
-                return res.status(200).send({msg:"未登录"});
+                return res.status(200).send({success:false,msg:"未登录"});
             }
             next();
         })
