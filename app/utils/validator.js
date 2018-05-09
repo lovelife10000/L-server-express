@@ -60,4 +60,11 @@ module.exports = {
     checkCategoryParentId(str) {
         return (str && validator.isMongoId(str)) || str==='firstCateNone';
     },
+
+    checkUserGroupName(str) {
+        return RegExp(/^[\w\u4e00-\u9fa5]{1,20}$/).test(str);
+    },
+    checkUserGroupParentId(str) {
+        return str && validator.isMongoId(str) || str==='0';
+    },
 }

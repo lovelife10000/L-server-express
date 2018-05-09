@@ -33,6 +33,8 @@ router.post('/userManage/addUserGroup', authMiddleware.isAuthenticated(), userMa
 router.get('/userManage/getAllUserGroups', authMiddleware.isAuthenticated(), userManage.getAllUserGroups);
 router.get('/userManage/getAllUsers', authMiddleware.isAuthenticated(), userManage.getAllUsers);
 router.post('/userManage/addUser', authMiddleware.isAuthenticated(), userManage.addUser);
+router.post('/userManage/changeToUse', authMiddleware.isAuthenticated(), userManage.changeToUse);
+router.post('/userManage/changeToNotUse', authMiddleware.isAuthenticated(), userManage.changeToNotUse);
 
 /*
 * 文档管理
