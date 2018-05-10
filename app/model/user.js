@@ -52,13 +52,13 @@ var UserSchema = new mongoose.Schema({
     email: String,
     name: String
   },
-  user_group: {
+  userGroup: {
     type: String,
-    default: 'user'
+
   },
   avatar: String,
   status: String,
-  register_time:String,
+  createTime:String,
   remark:String,
   phone:Number
 

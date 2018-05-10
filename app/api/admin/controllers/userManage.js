@@ -89,18 +89,23 @@ class userManage {
 
     }
 
-    getAllUsers(req, res, next) {
-
-        UserModel.find().then(function (info) {
-            if (info) {
-                res.status(200).json({success: true, data: info})
+    async getAllUsers(req, res, next) {
+        let msg = ''
+        try {
+            const allUsers =await UserModel.find({}, '-__v')
+            if (allUsers) {
+                msg = '获取成功'
+                return res200TrueData(res, msg, allUsers)
             } else {
-                res.status(404).json({
-                    code: 0,
-                    msg: '登录失败'
-                })
+                msg = '获取失败'
+                return res200False(res, msg)
             }
-        });
+        } catch (e) {
+            msg = '查询出错'
+            return res200False(res, msg)
+        }
+
+
     }
 
 
