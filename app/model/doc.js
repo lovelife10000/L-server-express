@@ -72,6 +72,11 @@ var DocSchema = new Schema({
     updateTime: {
         type: String,
 
+    },
+    banner: {
+        type: Boolean,
+        default: false
+
     }
 });
 
