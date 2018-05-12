@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var passport = require('passport');
-var appConfig = require('../../config/app.config');
+var appConfig = require('../../config/app');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');

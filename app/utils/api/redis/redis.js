@@ -1,4 +1,4 @@
-var appConfig = require('../../../config/app.config');
+var appConfig = require('../../../config/app');
 var redis   = require('redis');
 
 

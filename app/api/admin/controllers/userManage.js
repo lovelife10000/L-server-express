@@ -92,7 +92,7 @@ class userManage {
     async getAllUsers(req, res, next) {
         let msg = ''
         try {
-            const allUsers =await UserModel.find({}, '-__v')
+            const allUsers = await UserModel.find({}, '-__v')
             if (allUsers) {
                 msg = '获取成功'
                 return res200TrueData(res, msg, allUsers)
@@ -156,14 +156,25 @@ class userManage {
         });
     }
 
-    getUserInfo(req, res, next) {
+    async getUserInfo(req, res, next) {
 
+        let msg = ''
         var userId = req.user._id;
-        UserModel.findByIdAsync(userId).then(function (user) {
-            return res.status(200).json(user.userInfo);
-        }).catch(function (err) {
-            return res.status(401).send();
-        });
+        try {
+            const userInfo = await UserModel.findById(userId)
+            if(userInfo){
+                msg='获取成功'
+                return res200TrueData(res,msg,userInfo.userInfo)
+            }else {
+                msg='获取失败'
+                return res200False(res,msg)
+            }
+        } catch (e) {
+            msg = '查询出错'
+            return res200False(res, msg)
+        }
+
+
     }
 
     async changeToUse(req, res) {

@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var passport = require('passport');
-var appConfig = require('../../../config/app.config');
+var appConfig = require('../../../config/app');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
@@ -12,11 +12,11 @@ var UserModel = mongoose.model('User');
  * 验证token
  */
 function authToken(credentialsRequired) {
+
     return compose()
         .use(function (req, res, next) {
 
-            console.log('开始认证');
-            console.log('req.user是', req.user, req.session);
+
             if (req.query && req.query.access_token) {
                 req.headers.authorization = 'Bearer ' + req.query.access_token;
             }
@@ -38,16 +38,16 @@ function isAuthenticated() {
         .use(authToken(true))
         .use(function (err, req, res, next) {
 
-            console.log('UnauthorizedError');
+
 
             //expressJwt 错误处理中间件
             if (err.name === 'UnauthorizedError') {
-                return res.status(200).send({success:false,msg:"未登录"});
+                return res.status(200).send({success: false, msg: "未登录"});
             }
             next();
         })
         .use(function (req, res, next) {
-            console.log('最后一步');
+
             UserModel.findById(req.user._id, function (err, user) {
                 if (err) return res.status(500).send();
                 if (!user) return res.status(401).send();

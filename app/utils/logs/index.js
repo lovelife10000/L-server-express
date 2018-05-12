@@ -2,7 +2,7 @@
 
 var path = require('path');
 var bunyan = require('bunyan');
-var config = require('../../config/env');
+var config = require('../../config/app');
 
 var bunyanConfig = {
 	name: 'hutublog',
