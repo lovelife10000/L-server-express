@@ -1,47 +1,47 @@
-'use strict';
+'use strict'
 
-const  mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const  mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const BannerSchema = new Schema({
 
-    title: {
-        type: String,
+  title: {
+    type: String,
 
-    },
+  },
 
-    images: {
-        type: String,
-    },
+  images: {
+    type: String,
+  },
 
-    click: {
-        type: Number,
-        default: 1
-    },
-
-
-    type: {
-        type: String,
-
-    },
-
-    createTime: {
-        type: Date,
-        default: Date.now
-    },
+  click: {
+    type: Number,
+    default: 1
+  },
 
 
-    updateTime: {
-        type: Date,
-        default: Date.now
-    }
-});
+  type: {
+    type: String,
+
+  },
+
+  createTime: {
+    type: Date,
+    default: Date.now
+  },
 
 
-var Banner = mongoose.model('Banner', BannerSchema);
+  updateTime: {
+    type: Date,
+    default: Date.now
+  }
+})
 
-var Promise = require('bluebird');
-Promise.promisifyAll(Banner);
-Promise.promisifyAll(Banner.prototype);
 
-module.exports = Banner;
+var Banner = mongoose.model('Banner', BannerSchema)
+
+var Promise = require('bluebird')
+Promise.promisifyAll(Banner)
+Promise.promisifyAll(Banner.prototype)
+
+module.exports = Banner

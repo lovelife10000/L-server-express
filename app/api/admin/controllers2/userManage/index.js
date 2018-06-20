@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-const mongoose = require('mongoose');
-const UserGroupModel = mongoose.model('UserGroup');
-const UserModel = mongoose.model('User');
-const moment=require('moment');
+const mongoose = require('mongoose')
+const UserGroupModel = mongoose.model('UserGroup')
+const UserModel = mongoose.model('User')
+const moment=require('moment')
 
 
 module.exports = {
@@ -18,14 +18,14 @@ module.exports = {
           msg: '登录失败'
         })
       }
-    });
+    })
   },
 
   addUserGroup: function (req, res, next) {
     console.log('getParentUserGroups中', req.body)
-    let name = req.body.name;
-    let parentUserGroupId = req.body.parentUserGroupId;
-    let userGroupStatus = req.body.userGroupStatus;
+    let name = req.body.name
+    let parentUserGroupId = req.body.parentUserGroupId
+    let userGroupStatus = req.body.userGroupStatus
 
     UserGroupModel.createAsync({
       name: name,
@@ -33,12 +33,12 @@ module.exports = {
       user_group_status: userGroupStatus
     }).then(function (result) {
       if (result) {
-        return res.status(200).json({success: true});
+        return res.status(200).json({success: true})
       }
 
     }).catch(function (err) {
-      return next(err);
-    });
+      return next(err)
+    })
   },
 
   getAllUsers: function (req, res, next) {
@@ -52,36 +52,36 @@ module.exports = {
           msg: '登录失败'
         })
       }
-    });
+    })
   },
 
 
   addUser: function (req, res, next) {
-    let username = req.body.username;
-    let userGroup = req.body.userGroup;
-    let status = req.body.status;
-    let password = req.body.password;
-    let rePassword = req.body.rePassword;
-    let remark = req.body.remark;
-    let phone = req.body.phone;
-    let nickname = req.body.nickname;
-    let email = req.body.email;
+    let username = req.body.username
+    let userGroup = req.body.userGroup
+    let status = req.body.status
+    let password = req.body.password
+    let rePassword = req.body.rePassword
+    let remark = req.body.remark
+    let phone = req.body.phone
+    let nickname = req.body.nickname
+    let email = req.body.email
     if (password !== rePassword) {
-      return res.status(200).json({success: false});
+      return res.status(200).json({success: false})
     }
 
     UserModel.findOneAsync({
       username: username,
     }).then(function (result) {
       if (result) {
-        return res.status(200).json({success: false});
+        return res.status(200).json({success: false})
       }
     }).catch(function (err) {
-      return next(err);
-    });
-    let date = new Date();
+      return next(err)
+    })
+    let date = new Date()
 
-    let ms = moment(date).format('YYYYMMDDHHmmss').toString();
+    let ms = moment(date).format('YYYYMMDDHHmmss').toString()
 
     UserModel.createAsync({
       username: username,
@@ -95,12 +95,12 @@ module.exports = {
     }).then(function (result) {
       if (result) {
         result.set(password)
-        return res.status(200).json({success: true});
+        return res.status(200).json({success: true})
       }
 
     }).catch(function (err) {
-      return next(err);
-    });
+      return next(err)
+    })
   },
 
 

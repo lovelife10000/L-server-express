@@ -1,39 +1,39 @@
-'use strict';
+'use strict'
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var ArticleSchema = new Schema({
-	author_id:{
-		type: Schema.Types.ObjectId,
-		ref: 'User'
-	},
-	title:{
-		type:String,
-		unique: true
-	},
-	content:String,
-	//存储文章所用到的图片
-	images:{
-		type:String,
-	},
-	//一篇文章可以有多个标签
-	tags:[{
+  author_id:{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  title:{
+    type:String,
+    unique: true
+  },
+  content:String,
+  //存储文章所用到的图片
+  images:{
+    type:String,
+  },
+  //一篇文章可以有多个标签
+  tags:[{
 	  type: Schema.Types.ObjectId,
 	  ref: 'Tag'
-	}],
-	visit_count:{			//访问数
-		type:Number,
-		default:1
-	},
-	like_count:{
-		type:Number,
-		default:1
-	},
-	top:{
-		type:Boolean,
-		default:false
-	},
+  }],
+  visit_count:{			//访问数
+    type:Number,
+    default:1
+  },
+  like_count:{
+    type:Number,
+    default:1
+  },
+  top:{
+    type:Boolean,
+    default:false
+  },
   hot:{
     type:Boolean,
     default:false
@@ -42,18 +42,18 @@ var ArticleSchema = new Schema({
     type:String,
     default:'article'
   },
-	status:{				//0:草稿 1:发布
-		type:Number,
-		default:0
-	},
-	created: {
-		type: Date,
-		default: Date.now
-	},
-	publish_time: {
-		type: Date,
-		default: Date.now
-	},
+  status:{				//0:草稿 1:发布
+    type:Number,
+    default:0
+  },
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  publish_time: {
+    type: Date,
+    default: Date.now
+  },
   from: {
     type: String,
     default:''
@@ -70,7 +70,7 @@ var ArticleSchema = new Schema({
     type: Date,
     default: Date.now
   }
-});
+})
 
 ArticleSchema
   .virtual('info')
@@ -84,13 +84,13 @@ ArticleSchema
       'comment_count':this.comment_count,
       'like_count':this.like_count,
       'publish_time': this.publish_time
-    };
-  });
+    }
+  })
 
-var Article = mongoose.model('Article',ArticleSchema);
+var Article = mongoose.model('Article',ArticleSchema)
 
-var Promise = require('bluebird');
-Promise.promisifyAll(Article);
-Promise.promisifyAll(Article.prototype);
+var Promise = require('bluebird')
+Promise.promisifyAll(Article)
+Promise.promisifyAll(Article.prototype)
 
-module.exports = Article;
+module.exports = Article

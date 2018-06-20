@@ -1,18 +1,18 @@
-'use strict';
+'use strict'
 
-const mongoose = require('mongoose');
-const UserModel = mongoose.model('User');
+const mongoose = require('mongoose')
+const UserModel = mongoose.model('User')
 
 
 
 module.exports = {
   getUserInfo: function (req, res, next) {
 
-    var userId = req.user._id;
+    var userId = req.user._id
     UserModel.findByIdAsync(userId).then(function (user) {
-      return res.status(200).json(user.userInfo);
+      return res.status(200).json(user.userInfo)
     }).catch(function (err) {
-      return res.status(401).send();
-    });
+      return res.status(401).send()
+    })
   },
 }

@@ -1,28 +1,28 @@
-'use strict';
+'use strict'
 
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+  Schema = mongoose.Schema
 
 var LogsSchema = new Schema({
-	uid: {
-		type:Schema.Types.ObjectId,
-		ref:'User'
-	},
-	content: {
+  uid: {
+    type:Schema.Types.ObjectId,
+    ref:'User'
+  },
+  content: {
     type:String,
     trim: true
   },
-	type: String,
-	created: {
-		type: Date,
-		default: Date.now
-	}
-});
+  type: String,
+  created: {
+    type: Date,
+    default: Date.now
+  }
+})
 
-var Logs = mongoose.model('Logs',LogsSchema);
+var Logs = mongoose.model('Logs',LogsSchema)
 
-var Promise = require('bluebird');
-Promise.promisifyAll(Logs);
-Promise.promisifyAll(Logs.prototype);
+var Promise = require('bluebird')
+Promise.promisifyAll(Logs)
+Promise.promisifyAll(Logs.prototype)
 
-module.exports = Logs;
+module.exports = Logs

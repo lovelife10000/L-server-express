@@ -1,9 +1,9 @@
-const _ = require('lodash');
-const path = require('path');
-const fs = require('fs');
+const _ = require('lodash')
+const path = require('path')
+// const fs = require('fs')
 
 let all = {
-  domain:'',
+  domain: '',
   env: process.env.NODE_ENV,
   root: path.normalize(__dirname + '/../..'),
   // port: process.env.PORT || 9000,
@@ -17,9 +17,9 @@ let all = {
   },
   //redis 配置
   redis: {
-    host:  '127.0.0.1',
-    port:  6379,
-    password:  ''
+    host: '127.0.0.1',
+    port: 6379,
+    password: ''
   },
   redis2: {
     host: process.env.REDIS_PORT_6379_TCP_ADDR || '127.0.0.1',
@@ -63,8 +63,8 @@ let all = {
   snsLogins: ['github', 'qq'],
 
 
-};
+}
 
 
-let appConfig = _.merge(all, require('./' + process.env.NODE_ENV + '.js') || {});
-module.exports = appConfig;
+let appConfig = _.merge(all, require('./' + process.env.NODE_ENV + '.js') || {})
+module.exports = appConfig

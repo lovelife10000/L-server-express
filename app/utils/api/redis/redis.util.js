@@ -1,5 +1,5 @@
-var redis = require('./redis');
-var _ = require('lodash');
+var redis = require('./redis')
+var _ = require('lodash')
 
 /**
  * 从cache中取出缓存
@@ -9,18 +9,18 @@ var _ = require('lodash');
 var get = function (key, callback) {
   redis.get(key, function (err, data) {
     if (err) {
-      return callback(err);
+      return callback(err)
     }
     if (!data) {
-      return callback();
+      return callback()
     }
 
-    data = JSON.parse(data);
-    callback(data);
-  });
-};
+    data = JSON.parse(data)
+    callback(data)
+  })
+}
 
-exports.get = get;
+exports.get = get
 
 
 /**
@@ -33,17 +33,17 @@ exports.get = get;
  */
 var set = function (key, value, time, callback) {
   if (typeof time === 'function') {
-    callback = time;
-    time = null;
+    callback = time
+    time = null
   }
-  callback = callback || _.noop;
-  value = JSON.stringify(value);
+  callback = callback || _.noop
+  value = JSON.stringify(value)
   if (!time) {
-    redis.set(key, value, callback);
+    redis.set(key, value, callback)
   } else {
     //将毫秒单位转为秒
-    redis.setex(key, parseInt(time / 1000), value, callback);
+    redis.setex(key, parseInt(time / 1000), value, callback)
   }
-};
+}
 
-exports.set = set;
+exports.set = set
