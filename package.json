@@ -70,6 +70,9 @@
     "qiniu": "^6.1.11"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.0",
+    "eslint-plugin-react": "^7.12.3",
     "gulp": "^3.9.1",
     "gulp-coveralls": "^0.1.4",
     "gulp-env": "^0.4.0",
